@@ -34,7 +34,7 @@ environment {
 		stage('Login') {
 agent  { label 'tom' }
 			steps {
-				sh ' aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 036127958665.dkr.ecr.us-east-2.amazonaws.com'
+				sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 036127958665.dkr.ecr.us-east-2.amazonaws.com'
 			}
 		}
 	stage('Push') {
@@ -49,6 +49,7 @@ agent  { label 'tom' }
     stage('pull image'){
     agent { label 'deplo' }
         steps{
+		sh 'aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 036127958665.dkr.ecr.us-east-2.amazonaws.com'
             sh 'docker rm -f mytomcat'
             sh 'docker run -d --name mytomcat -p 7100:8080 036127958665.dkr.ecr.us-east-2.amazonaws.com/tomcatnew:$BUILD_NUMBER'
         }
