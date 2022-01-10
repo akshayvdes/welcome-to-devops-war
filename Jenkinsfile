@@ -1,7 +1,7 @@
 pipeline {
 	agent none
 environment {
-		DOCKERHUB_CREDENTIALS=credentials('dockerhub_slave-1')
+		DOCKERHUB_CREDENTIALS=credentials('docker_slave_slave-2')
 	}
     stages {
 	
