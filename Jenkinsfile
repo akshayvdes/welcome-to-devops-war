@@ -34,15 +34,15 @@ environment {
 		stage('Login') {
 agent  { label 'tom' }
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh ' aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 036127958665.dkr.ecr.us-east-2.amazonaws.com'
 			}
 		}
 	stage('Push') {
  agent  { label 'tom' }
 
 			steps {
-			    sh 'docker tag tomcat:$BUILD_NUMBER akshayvdes/tomcatnew_ak:$BUILD_NUMBER'
-				sh 'docker push akshayvdes/tomcatnew_ak:$BUILD_NUMBER'
+			    sh 'docker tag tomcat:$BUILD_NUMBER 036127958665.dkr.ecr.us-east-2.amazonaws.com/tomcatnew:$BUILD_NUMBER'
+				sh 'docker push 036127958665.dkr.ecr.us-east-2.amazonaws.com/tomcatnew:$BUILD_NUMBER'
 			}
 		}
 
@@ -50,7 +50,7 @@ agent  { label 'tom' }
     agent { label 'deplo' }
         steps{
             sh 'docker rm -f mytomcat'
-            sh 'docker run -d --name mytomcat -p 7100:8080 akshayvdes/tomcatnew_ak:$BUILD_NUMBER'
+            sh 'docker run -d --name mytomcat -p 7100:8080 036127958665.dkr.ecr.us-east-2.amazonaws.com/tomcatnew:$BUILD_NUMBER'
         }
     }
     }
