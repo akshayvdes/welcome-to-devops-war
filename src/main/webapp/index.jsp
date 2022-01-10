@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Welcome to devops!</title>
+<title>lets start the new journey!</title>
 </head>
 <body>
 	<h1>Welcome to devops!</h1>
