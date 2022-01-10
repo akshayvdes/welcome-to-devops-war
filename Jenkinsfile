@@ -20,7 +20,7 @@ environment {
                   sh 'pwd'
                 sh 'ls'
             
-                sh 'docker build -t tomcat:1.0 .'  
+                sh 'docker build -t tomcat:$BUILD_NUMBER .'  
                 }
             }
 	 }
@@ -28,7 +28,7 @@ environment {
  agent  { label 'tom' }
 	     steps{
 	        sh 'docker rm -f mytomcat'
-	         sh 'docker run -d --name mytomcat -p 8888:8080 tomcat:1.0'
+	         sh 'docker run -d --name mytomcat -p 8888:8080 tomcat:$BUILD_NUMBER'
 	     }
 	 }
 		stage('Login') {
@@ -41,8 +41,8 @@ agent  { label 'tom' }
  agent  { label 'tom' }
 
 			steps {
-			    sh 'docker tag tomcat:1.0 akshayvdes/tomcatnew_ak:1.3'
-				sh 'docker push akshayvdes/tomcatnew_ak:1.3'
+			    sh 'docker tag tomcat:$BUILD_NUMBER akshayvdes/tomcatnew_ak:$BUILD_NUMBER'
+				sh 'docker push akshayvdes/tomcatnew_ak:$BUILD_NUMBER'
 			}
 		}
 
@@ -50,7 +50,7 @@ agent  { label 'tom' }
     agent { label 'deplo' }
         steps{
             sh 'docker rm -f mytomcat'
-            sh 'docker run -d --name mytomcat -p 7100:8080 akshayvdes/tomcatnew_ak:1.3'
+            sh 'docker run -d --name mytomcat -p 7100:8080 akshayvdes/tomcatnew_ak:$BUILD_NUMBER'
         }
     }
     }
